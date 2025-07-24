@@ -493,14 +493,21 @@
         </div>
 
         <!-- 導覽列 -->
-        <div class="bg-gray-50 p-4 flex justify-between items-center border-t border-gray-200">
-            <button id="prevBtn" class="px-6 py-2.5 text-base font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed nav-button shadow-md">
-                上一頁
-            </button>
-            <div id="slideCounter" class="text-sm font-medium text-gray-600"></div>
-            <button id="nextBtn" class="px-6 py-2.5 text-base font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed nav-button shadow-md">
-                下一頁
-            </button>
+        <div class="bg-gray-50 p-4 flex justify-between items-end border-t border-gray-200">
+            <!-- 版權宣告 -->
+            <div>
+                <p class="text-xs text-gray-400">Copyright © 閃動格子股份有限公司 All Rights Reserved.</p>
+            </div>
+            <!-- 控制按鈕 -->
+            <div class="flex items-center space-x-4">
+                <button id="prevBtn" class="px-6 py-2.5 text-base font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed nav-button shadow-md">
+                    上一頁
+                </button>
+                <div id="slideCounter" class="text-sm font-medium text-gray-600"></div>
+                <button id="nextBtn" class="px-6 py-2.5 text-base font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed nav-button shadow-md">
+                    下一頁
+                </button>
+            </div>
         </div>
     </div>
 
