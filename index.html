@@ -27,7 +27,7 @@
             display: none;
             min-height: calc(100vh - 120px); /* 預留上下空間 */
             max-height: 800px;
-            padding: 3rem 4.5rem;
+            padding: 2.5rem 3.5rem; /* 調整內距以適應不同螢幕 */
             opacity: 0;
             transition: opacity 0.6s ease-in-out;
             flex-direction: column;
@@ -493,9 +493,9 @@
         </div>
 
         <!-- 導覽列 -->
-        <div class="bg-gray-50 p-4 flex justify-between items-end border-t border-gray-200">
+        <div class="bg-gray-50 p-4 flex flex-col sm:flex-row sm:justify-between items-center sm:items-end gap-4 sm:gap-0 border-t border-gray-200">
             <!-- 版權宣告 -->
-            <div>
+            <div class="order-last sm:order-first">
                 <p class="text-xs text-gray-400">Copyright © 閃動格子股份有限公司 All Rights Reserved.</p>
             </div>
             <!-- 控制按鈕 -->
