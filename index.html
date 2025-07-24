@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>閃動格子 (CyberCube) 日本事業投資計畫書</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* --- 核心樣式與設計系統 --- */
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #111827; /* 深色背景，突顯主體 */
+        }
+        .presentation-container {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0,0,0,0.2);
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+        .slide {
+            display: none;
+            min-height: calc(100vh - 120px); /* 預留上下空間 */
+            max-height: 800px;
+            padding: 3rem 4.5rem;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+        h1, h2, h3 {
+            font-family: 'Noto Sans TC', 'Inter', sans-serif;
+            font-weight: 900;
+        }
+        /* --- 動畫效果 --- */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-25px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+        .slide.active { animation: fadeIn 0.5s ease-out; }
+        .slide.active .animate-up { animation: fadeInUp 0.6s ease-out forwards; }
+        .slide.active .animate-left { animation: fadeInLeft 0.6s ease-out forwards; }
+        .slide.active .animate-zoom { animation: zoomIn 0.6s ease-out forwards; }
+        
+        /* 動畫延遲，製造層次感 */
+        .stagger-1 { animation-delay: 0.1s; opacity: 0; }
+        .stagger-2 { animation-delay: 0.2s; opacity: 0; }
+        .stagger-3 { animation-delay: 0.3s; opacity: 0; }
+        .stagger-4 { animation-delay: 0.4s; opacity: 0; }
+        .stagger-5 { animation-delay: 0.5s; opacity: 0; }
+
+        /* --- 組件樣式 --- */
+        .nav-button {
+            transition: all 0.3s ease;
+        }
+        .nav-button:hover:not(:disabled) {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 7px 15px rgba(99, 102, 241, 0.3);
+        }
+        .progress-bar {
+            transition: width 0.4s ease-out;
+        }
+        .brand-gradient-text {
+            background: linear-gradient(45deg, #4f46e5, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .icon-bg {
+            background-color: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            background-color: #6366f1;
+            border: 3px solid #e0e7ff;
+            border-radius: 9999px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 flex flex-col items-center justify-center min-h-screen p-4 md:p-8">
+
+    <div id="presentation" class="presentation-container w-full max-w-6xl bg-white rounded-2xl overflow-hidden flex flex-col">
+        <!-- 進度條 -->
+        <div class="w-full bg-gray-200 h-1.5">
+            <div id="progressBar" class="progress-bar bg-indigo-600 h-1.5" style="width: 0%;"></div>
+        </div>
+
+        <div class="slides-container flex-grow">
+
+            <!-- Slide 1: 封面頁 (更新) -->
+            <div class="slide active items-center text-center bg-gray-900 text-white" data-slide="1">
+                <div class="animate-up stagger-1">
+                    <div class="w-24 h-1.5 bg-indigo-500 rounded-full mb-8 mx-auto"></div>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black animate-up stagger-2">
+                    <span class="brand-gradient-text">閃動格子</span><br>日本事業投資計畫書
+                </h1>
+                <p class="mt-6 text-xl md:text-2xl text-gray-300 font-medium animate-up stagger-3">FROM TAIWAN TO TOKYO: 開啟體感娛樂新紀元</p>
+                <div class="mt-16 text-gray-400 animate-up stagger-4">
+                    <p>提案方：CyberCube CO., Ltd. (閃動格子股份有限公司)</p>
+                    <p>日期：2025年7月24日</p>
+                </div>
+            </div>
+            
+            <!-- Slide 2: 議程 -->
+            <div class="slide" data-slide="2">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center animate-up stagger-1">簡報議程</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 max-w-4xl mx-auto">
+                    <div class="flex items-center animate-up stagger-2">
+                        <span class="icon-bg text-indigo-600 rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center font-bold">1</span>
+                        <span class="ml-4 text-xl text-gray-700">市場機會與品牌願景</span>
+                    </div>
+                    <div class="flex items-center animate-up stagger-3">
+                        <span class="icon-bg text-indigo-600 rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center font-bold">2</span>
+                        <span class="ml-4 text-xl text-gray-700">SWOT 與競品分析</span>
+                    </div>
+                    <div class="flex items-center animate-up stagger-4">
+                        <span class="icon-bg text-indigo-600 rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center font-bold">3</span>
+                        <span class="ml-4 text-xl text-gray-700">投資計畫與財務預測</span>
+                    </div>
+                    <div class="flex items-center animate-up stagger-5">
+                        <span class="icon-bg text-indigo-600 rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center font-bold">4</span>
+                        <span class="ml-4 text-xl text-gray-700">市場策略與風險評估</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: 投資摘要 (更新) -->
+            <div class="slide" data-slide="3">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-10 text-center animate-up stagger-1">投資摘要 (Executive Summary)</h2>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="animate-up stagger-2 space-y-8">
+                        <div class="bg-indigo-50 border-l-4 border-indigo-500 p-6 rounded-r-lg">
+                            <h3 class="text-xl font-bold text-indigo-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                                總投資金額
+                            </h3>
+                            <p class="text-5xl font-extrabold text-indigo-600">約 新台幣 2,000 萬</p>
+                        </div>
+                        <div class="bg-gray-50 border-l-4 border-gray-500 p-6 rounded-r-lg">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                                您將獲得
+                            </h3>
+                            <p class="text-4xl font-bold text-gray-700">日本公司 <span class="text-indigo-600 font-extrabold">20%</span> 直接股權</p>
+                        </div>
+                    </div>
+                    <div class="animate-up stagger-3 bg-gray-50 p-8 rounded-xl shadow-inner">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">資金分配結構</h3>
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-lg bg-green-100 border border-green-200">
+                                <p class="font-semibold text-green-800">A. 入資日本公司</p>
+                                <p class="text-2xl font-bold text-green-700">新台幣 280 萬</p>
+                                <p class="text-sm text-green-600 mt-1">(等值 1,400 萬日幣)</p>
+                            </div>
+                            <div class="p-4 rounded-lg bg-blue-100 border border-blue-200">
+                                <p class="font-semibold text-blue-800">B. 交付台灣總部服務及授權費</p>
+                                <p class="text-2xl font-bold text-blue-700">新台幣 1,720 萬</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: 品牌故事 (原Slide 5) -->
+            <div class="slide" data-slide="4">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center animate-up stagger-1">娛樂 x 遊戲 x 社交的完美融合</h2>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="animate-up stagger-2">
+                        <div class="icon-bg rounded-full w-24 h-24 mx-auto flex items-center justify-center mb-5"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 009-9m-9 9a9 9 0 00-9-9" /></svg></div>
+                        <h3 class="text-xl font-bold mb-2">源於國際，台灣領先</h3>
+                        <p class="text-gray-600">靈感源於國際頂尖互動展覽，CyberCube 已是台灣本土市場的領軍者，借助專業技術，我們將探索更多元的產品可能性。</p>
+                    </div>
+                    <div class="animate-up stagger-3">
+                        <div class="icon-bg rounded-full w-24 h-24 mx-auto flex items-center justify-center mb-5"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg></div>
+                        <h3 class="text-xl font-bold mb-2">娛樂 + 遊戲 + 社交</h3>
+                        <p class="text-gray-600">我們將運動、娛樂與社交完美結合，打造出一個時尚、未來感十足的新潮流，適用於情侶約會、親子遊樂、公司團建等多種場景。</p>
+                    </div>
+                    <div class="animate-up stagger-4">
+                        <div class="icon-bg rounded-full w-24 h-24 mx-auto flex items-center justify-center mb-5"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                        <h3 class="text-xl font-bold mb-2">動感十足的全新體驗</h3>
+                        <p class="text-gray-600">結合奔跑、跳躍、舞動等動作，讓玩家在遊戲中同時鍛鍊身體、挑戰極限，在豐富多彩的遊戲場景中盡情娛樂。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 5: 市場機會 (原Slide 6) -->
+            <div class="slide" data-slide="5">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2 text-center animate-up stagger-1">體感遊戲 + 電子競技 + 日本 = 市場還有空格</h2>
+                <p class="text-lg text-gray-600 text-center mb-10 animate-up stagger-2">日本室內娛樂市場正高速成長，預計2030年市場規模將翻倍。我們鎖定三大高潛力市場：</p>
+                <div class="grid md:grid-cols-3 gap-6 text-center">
+                    <div class="bg-red-50 p-6 rounded-xl shadow-sm hover:shadow-xl hover:scale-105 transition-all duration-300 animate-up stagger-3">
+                        <p class="text-lg font-bold text-red-800">KOL 潮流市場</p>
+                        <p class="text-5xl font-extrabold text-red-600 my-2">435億</p>
+                        <p class="font-semibold text-red-700">日圓</p>
+                        <p class="mt-2 text-sm text-red-600 font-bold bg-red-100 px-2 py-1 rounded-full inline-block">年增率 18.1%</p>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-xl shadow-sm hover:shadow-xl hover:scale-105 transition-all duration-300 animate-up stagger-4">
+                        <p class="text-lg font-bold text-blue-800">企業團建活動市場</p>
+                        <p class="text-5xl font-extrabold text-blue-600 my-2">974億</p>
+                        <p class="font-semibold text-blue-700">日圓</p>
+                        <p class="mt-2 text-sm text-blue-600 font-bold bg-blue-100 px-2 py-1 rounded-full inline-block">年增率 6.9%</p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-xl shadow-sm hover:shadow-xl hover:scale-105 transition-all duration-300 animate-up stagger-5">
+                        <p class="text-lg font-bold text-green-800">室內娛樂市場</p>
+                        <p class="text-5xl font-extrabold text-green-600 my-2">3096億</p>
+                        <p class="font-semibold text-green-700">日圓</p>
+                        <p class="mt-2 text-sm text-green-600 font-bold bg-green-100 px-2 py-1 rounded-full inline-block">年增率 12.2%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: SWOT 分析 (原Slide 7) -->
+            <div class="slide" data-slide="6">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-10 text-center animate-up stagger-1">SWOT 分析：知己知彼，決勝千里</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-green-50 p-6 rounded-xl animate-up stagger-2">
+                        <h3 class="text-2xl font-bold text-green-800 mb-4 flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>優勢 (Strengths)</h3>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start"><span class="text-green-500 mr-3 mt-1">&#10004;</span><span><strong>成熟產品與技術：</strong>台灣成功經驗可直接複製，技術領先市場同業。</span></li>
+                            <li class="flex items-start"><span class="text-green-500 mr-3 mt-1">&#10004;</span><span><strong>世界級成功經驗：</strong>產品概念已在國際市場獲得驗證。</span></li>
+                            <li class="flex items-start"><span class="text-green-500 mr-3 mt-1">&#10004;</span><span><strong>文化相近：</strong>台日文化相近，有助於快速攻克市場。</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-xl animate-up stagger-3">
+                        <h3 class="text-2xl font-bold text-blue-800 mb-4 flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>機會 (Opportunities)</h3>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">&#10004;</span><span><strong>市場尚無類似競品：</strong>擁有定義市場的先發優勢。</span></li>
+                            <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">&#10004;</span><span><strong>娛樂消費力高：</strong>日本消費者對新潮娛樂接受度高且捨得花費。</span></li>
+                            <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">&#10004;</span><span><strong>企業市場尚未飽和：</strong>企業團建活動需求強勁，亟需創新方案。</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-yellow-50 p-6 rounded-xl animate-up stagger-4">
+                        <h3 class="text-2xl font-bold text-yellow-800 mb-4 flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>劣勢 (Weaknesses)</h3>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start"><span class="text-yellow-500 mr-3 mt-1">&#10007;</span><span><strong>品牌信任尚不足：</strong>作為海外品牌，需時間建立在地信任感。</span></li>
+                            <li class="flex items-start"><span class="text-yellow-500 mr-3 mt-1">&#10007;</span><span><strong>初期資源有限：</strong>需精準投放行銷與營運資源。</span></li>
+                            <li class="flex items-start"><span class="text-yellow-500 mr-3 mt-1">&#10007;</span><span><strong>市場陌生：</strong>本地市場對此類新型態娛樂尚不熟悉。</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-red-50 p-6 rounded-xl animate-up stagger-5">
+                        <h3 class="text-2xl font-bold text-red-800 mb-4 flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>威脅 (Threats)</h3>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start"><span class="text-red-500 mr-3 mt-1">&#10007;</span><span><strong>行銷磨合：</strong>在日行銷策略與成效需要時間驗證與調整。</span></li>
+                            <li class="flex items-start"><span class="text-red-500 mr-3 mt-1">&#10007;</span><span><strong>潛在競品：</strong>在地公司可能快速推出類似產品。</span></li>
+                            <li class="flex items-start"><span class="text-red-500 mr-3 mt-1">&#10007;</span><span><strong>其他娛樂競爭：</strong>需與其他成熟的室內娛樂產業競爭。</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 7: 競品分析 (原Slide 8) -->
+            <div class="slide" data-slide="7">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-10 text-center animate-up stagger-1">競品分析：我們為何與眾不同？</h2>
+                <div class="grid md:grid-cols-4 gap-5">
+                    <div class="bg-indigo-50 border-2 border-indigo-500 p-5 rounded-xl animate-up stagger-2">
+                        <h3 class="text-2xl font-bold text-indigo-700 mb-4 text-center">閃動格子</h3>
+                        <p class="font-bold mb-1">主打賣點：</p>
+                        <p class="text-sm mb-3">風格時尚、上手門檻低、回饋迅速、團隊合作。</p>
+                        <p class="font-bold mb-1">擴張潛力：</p>
+                        <p class="text-sm">規則簡單直覺，受眾廣，標準化明確，<strong class="text-indigo-700">擴張能力高</strong>。</p>
+                    </div>
+                    <div class="bg-gray-50 p-5 rounded-xl animate-up stagger-3">
+                        <h3 class="text-xl font-bold text-gray-700 mb-4 text-center">BEAT TOWER</h3>
+                        <p class="font-bold mb-1">主打賣點：</p>
+                        <p class="text-sm mb-3">節奏遊戲結合解謎，具速度感。</p>
+                        <p class="font-bold mb-1">擴張潛力：</p>
+                        <p class="text-sm">對玩家節奏感有要求，<strong class="text-gray-600">受眾較侷限</strong>。</p>
+                    </div>
+                    <div class="bg-gray-50 p-5 rounded-xl animate-up stagger-4">
+                        <h3 class="text-xl font-bold text-gray-700 mb-4 text-center">VR ZONE</h3>
+                        <p class="font-bold mb-1">主打賣點：</p>
+                        <p class="text-sm mb-3">視覺沉浸式體驗、畫面精緻。</p>
+                        <p class="font-bold mb-1">擴張潛力：</p>
+                        <p class="text-sm">設備成本高，<strong class="text-gray-600">擴張資金需求高</strong>。</p>
+                    </div>
+                    <div class="bg-gray-50 p-5 rounded-xl animate-up stagger-5">
+                        <h3 class="text-xl font-bold text-gray-700 mb-4 text-center">密室逃脫</h3>
+                        <p class="font-bold mb-1">主打賣點：</p>
+                        <p class="text-sm mb-3">解謎為主，講求故事性、世界觀。</p>
+                        <p class="font-bold mb-1">擴張潛力：</p>
+                        <p class="text-sm">需不斷重新裝潢，<strong class="text-gray-600">體驗複製較不易</strong>。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 8: 投資結構 (原Slide 9, 更新) -->
+            <div class="slide" data-slide="8">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-10 text-center animate-up stagger-1">清晰的投資結構：直接持股，總部賦能</h2>
+                <div class="grid md:grid-cols-5 gap-8 items-center">
+                    <div class="md:col-span-2 animate-up stagger-2">
+                        <div class="space-y-4 text-center">
+                            <div class="p-4 bg-gray-800 text-white rounded-lg shadow-lg">
+                                <p class="font-bold text-lg">台灣 CyberCube (總部)</p>
+                            </div>
+                            <div class="flex justify-center items-center">
+                                <div class="w-px h-8 bg-gray-300"></div>
+                            </div>
+                            <div class="text-center text-indigo-600 font-semibold">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                                <p class="text-sm mt-1">核心技術 / IP / 營運授權</p>
+                            </div>
+                            <div class="flex justify-center items-center">
+                                <div class="w-px h-8 bg-gray-300"></div>
+                            </div>
+                            <div class="p-4 bg-indigo-600 text-white rounded-lg shadow-lg">
+                                <p class="font-bold text-lg">日本 CyberCube (營運主體)</p>
+                                <p class="text-sm opacity-80">資本額：7,000萬日幣</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-3 animate-zoom stagger-3">
+                        <canvas id="shareholdingChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 9: 募資計畫 (原Slide 10, 更新) -->
+            <div class="slide" data-slide="9">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-8 text-center animate-up stagger-1">募資計畫與資金運用</h2>
+                <div class="w-full bg-indigo-50 p-6 rounded-xl mb-8 animate-zoom stagger-2 ring-1 ring-indigo-200">
+                    <h3 class="text-xl font-bold text-indigo-800 mb-4 text-center">您的投資與回報</h3>
+                     <div class="flex flex-col md:flex-row justify-around items-center text-center">
+                        <div>
+                            <p class="font-semibold text-gray-700">總投資金額</p>
+                            <p class="text-4xl font-bold text-indigo-600">約 新台幣 2,000 萬</p>
+                        </div>
+                        <div class="text-4xl font-light text-gray-300 mx-6 my-4 md:my-0">➔</div>
+                        <div>
+                            <p class="font-semibold text-gray-700">獲得股權</p>
+                            <p class="text-4xl font-bold text-indigo-600">日本公司 20%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="p-6 rounded-xl bg-green-50 border border-green-200 animate-up stagger-3">
+                        <h3 class="text-xl font-bold text-green-800 mb-4">A. 入資日本公司</h3>
+                        <p class="text-3xl font-bold text-green-700 mb-3">NT$ 280 萬</p>
+                        <p class="text-sm text-green-700 mb-4">此資金將作為您取得日本公司20%股權之股本 (1,400萬日幣)。</p>
+                        <p class="font-semibold text-green-800">主要用途：</p>
+                        <ul class="list-disc list-inside text-sm space-y-1 text-green-700">
+                            <li>首間旗艦店建置 (裝潢/設備)</li>
+                            <li>前期營運預備金 (人事/租金)</li>
+                            <li>市場行銷與推廣</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 rounded-xl bg-blue-50 border border-blue-200 animate-up stagger-4">
+                        <h3 class="text-xl font-bold text-blue-800 mb-4">B. 台灣總部服務及授權費</h3>
+                        <p class="text-3xl font-bold text-blue-700 mb-3">NT$ 1,720 萬</p>
+                        <p class="text-sm text-blue-700 mb-4">此為支付給總部的關鍵資源費用、服務費及授權。</p>
+                        <p class="font-semibold text-blue-800">價值所在：</p>
+                        <ul class="list-disc list-inside text-sm space-y-1 text-blue-700">
+                            <li>核心技術與軟硬體IP授權</li>
+                            <li>台灣團隊營運支援與顧問</li>
+                            <li>前期市場開發與資源整合</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-r-lg animate-up stagger-5" role="alert">
+                    <p class="font-bold flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" /></svg>投資人權益保護條款</p>
+                    <p class="mt-2 text-sm">我們承諾：未來日本公司若有增資需求，在整體資本額未超過 **1 億日圓** 的前提下，本次投資人**無需投入額外資金，即可維持原有的持股比例**，確保您的早期投資價值受到充分保障。</p>
+                </div>
+            </div>
+            
+            <!-- Slide 10: 財務預測 (原Slide 11) -->
+            <div class="slide" data-slide="10">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-8 text-center animate-up stagger-1">財務預測：擴張情境與損益平衡點</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                    <div class="animate-up stagger-2">
+                        <h3 class="text-xl font-bold text-center mb-4">情境A: 穩健展店</h3>
+                        <canvas id="steadyGrowthChart"></canvas>
+                        <p class="text-center mt-3 font-semibold text-gray-700">約 <span class="text-indigo-600 text-lg">16</span> 個月達到損益平衡</p>
+                    </div>
+                    <div class="animate-up stagger-3">
+                        <h3 class="text-xl font-bold text-center mb-4">情境B: 加速展店</h3>
+                        <canvas id="acceleratedGrowthChart"></canvas>
+                        <p class="text-center mt-3 font-semibold text-gray-700">約 <span class="text-indigo-600 text-lg">12</span> 個月達到損益平衡</p>
+                    </div>
+                </div>
+                <p class="text-center text-xs text-gray-400 mt-6 animate-up stagger-4">※ 單位: 百萬日圓。圖表根據單店模型（月營收500萬/月淨利230萬）及不同擴張速度進行估算。</p>
+            </div>
+
+            <!-- Slide 11: 市場進入策略 (原Slide 12) -->
+            <div class="slide" data-slide="11">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center animate-up stagger-1">市場進入策略：三步曲，引爆東京</h2>
+                <div class="grid md:grid-cols-3 gap-6 text-center">
+                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg hover:-translate-y-2 transition-all duration-300 animate-up stagger-2">
+                        <p class="text-3xl font-black brand-gradient-text mb-2">1. 登陸</p>
+                        <p class="text-xl font-bold mb-3">設立據點，符合法規</p>
+                        <p class="text-sm text-gray-600">迅速完成公司設立、簽證辦理、帳戶開設等行政流程，鎖定下北澤、吉祥寺等潮流中心作為首要店址目標。</p>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg hover:-translate-y-2 transition-all duration-300 animate-up stagger-3">
+                        <p class="text-3xl font-black brand-gradient-text mb-2">2. 紮營</p>
+                        <p class="text-xl font-bold mb-3">開幕營運，實現盈利</p>
+                        <p class="text-sm text-gray-600">透過「預熱炒作 -> 開幕引爆 -> 即時擴散」的行銷策略，結合KOL操作與社群挑戰，開幕即成熱搜話題。</p>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg hover:-translate-y-2 transition-all duration-300 animate-up stagger-4">
+                        <p class="text-3xl font-black brand-gradient-text mb-2">3. 打江山</p>
+                        <p class="text-xl font-bold mb-3">品牌深耕，穩健擴張</p>
+                        <p class="text-sm text-gray-600">導入企業團建方案切入B2B市場，並尋求與在地動漫/遊戲IP合作，實現品牌影響力與營收的雙重擴張。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 12: 未來藍圖 (原Slide 13) -->
+            <div class="slide" data-slide="12">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center animate-up stagger-1">未來展望與擴張藍圖</h2>
+                <div class="relative w-full max-w-4xl mx-auto">
+                    <!-- Timeline line -->
+                    <div class="absolute left-1/2 -translate-x-1/2 h-full w-1 bg-indigo-100 rounded-full"></div>
+                    <!-- Timeline items -->
+                    <div class="relative flex justify-between items-center w-full mb-16 animate-up stagger-2">
+                        <div class="w-5/12"></div>
+                        <div class="absolute left-1/2 -translate-x-1/2 z-10 bg-indigo-600 text-white w-32 h-32 rounded-full flex flex-col items-center justify-center text-center font-bold shadow-lg"><span class="text-lg">Phase 1</span><span class="text-xs font-normal">東京插旗</span></div>
+                        <div class="w-5/12 p-5 bg-gray-50 rounded-lg shadow-sm border">複製台灣經驗，測試日本市場，驗證營運決策，建立灘頭堡。</div>
+                    </div>
+                    <div class="relative flex justify-between items-center w-full mb-16 animate-up stagger-3">
+                        <div class="w-5/12 p-5 bg-gray-50 rounded-lg shadow-sm border text-right">在東京開設多家分店，完成大城市內的規模化，達到投入損益平衡。</div>
+                        <div class="absolute left-1/2 -translate-x-1/2 z-10 bg-indigo-600 text-white w-32 h-32 rounded-full flex flex-col items-center justify-center text-center font-bold shadow-lg"><span class="text-lg">Phase 2</span><span class="text-xs font-normal">首都擴張</span></div>
+                        <div class="w-5/12"></div>
+                    </div>
+                    <div class="relative flex justify-between items-center w-full animate-up stagger-4">
+                        <div class="w-5/12"></div>
+                        <div class="absolute left-1/2 -translate-x-1/2 z-10 bg-indigo-600 text-white w-32 h-32 rounded-full flex flex-col items-center justify-center text-center font-bold shadow-lg"><span class="text-lg">Phase 3</span><span class="text-xs font-normal">全國制霸</span></div>
+                        <div class="w-5/12 p-5 bg-gray-50 rounded-lg shadow-sm border">複製成功經驗至其他大城市，穩固品牌形象，讓CyberCube成為日本同類型遊戲的代名詞。</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 13: 風險評估 (原Slide 14) -->
+            <div class="slide" data-slide="13">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-10 text-center animate-up stagger-1">風險評估與應對策略</h2>
+                <div class="space-y-5 max-w-4xl mx-auto">
+                    <div class="bg-gray-50 p-4 rounded-lg flex items-start animate-up stagger-2">
+                        <strong class="w-1/4 text-red-600">品牌信任：</strong>
+                        <p class="w-3/4 text-gray-700">透過開幕前預約制、KOL領頭體驗及社群熱搜操作，快速建立品牌聲量與市場關注度。</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg flex items-start animate-up stagger-3">
+                        <strong class="w-1/4 text-yellow-600">成本控制：</strong>
+                        <p class="w-3/4 text-gray-700">精準分析各區域租金與人流，選擇成本與效益最佳化的店點，確保長期營運穩定。</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg flex items-start animate-up stagger-4">
+                        <strong class="w-1/4 text-blue-600">市場接受度：</strong>
+                        <p class="w-3/4 text-gray-700">藉由免費體驗活動與社群預熱，提前測試市場反應；並以技術優勢和差異化定位，與現有娛樂做出區隔。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 14: 時程規劃 (原Slide 15) -->
+            <div class="slide" data-slide="14">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center animate-up stagger-1">合作流程與時程規劃</h2>
+                <div class="relative border-l-4 border-indigo-200 ml-4 pl-8 space-y-12">
+                    <div class="timeline-item animate-up stagger-2">
+                        <p class="text-indigo-600 font-bold">第一階段：合作意向確認</p>
+                        <h3 class="text-2xl font-semibold text-gray-800 mt-1">簽署投資意向書 (LOI)</h3>
+                        <p class="text-gray-500 font-mono mt-1">截止日期：2025年8月15日</p>
+                    </div>
+                    <div class="timeline-item animate-up stagger-3">
+                        <p class="text-indigo-600 font-bold">第二階段：資金到位與合約簽署</p>
+                        <h3 class="text-2xl font-semibold text-gray-800 mt-1">完成正式合約與資金匯入</h3>
+                        <p class="text-gray-500 font-mono mt-1">截止日期：2025年8月31日</p>
+                    </div>
+                    <div class="timeline-item animate-up stagger-4">
+                        <p class="text-indigo-600 font-bold">第三階段：日本公司設立與股權登記</p>
+                        <h3 class="text-2xl font-semibold text-gray-800 mt-1">完成法人與股東登記</h3>
+                        <p class="text-gray-500 font-mono mt-1">目標時間：2025年9月</p>
+                    </div>
+                    <div class="timeline-item animate-up stagger-5">
+                        <p class="text-indigo-600 font-bold">第四階段：營運啟動</p>
+                        <h3 class="text-2xl font-semibold text-gray-800 mt-1">團隊到位，產品/服務正式上線</h3>
+                        <p class="text-gray-500 font-mono mt-1">目標時間：2025年第四季</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 15: 結論 (原Slide 16) -->
+            <div class="slide items-center text-center" data-slide="15">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 animate-up stagger-1">結論：<span class="brand-gradient-text">藍燈已亮，即刻啟程！</span></h2>
+                <p class="mt-6 text-lg text-gray-600 max-w-3xl mx-auto animate-up stagger-2">CyberCube 在日本市場充滿機會。透過「台灣經驗 + 日本專業」的合作模式，我們能大幅降低風險，加速擴展，成為市場領導品牌。</p>
+                <div class="my-10 w-full max-w-3xl grid sm:grid-cols-3 gap-4 text-center">
+                    <div class="bg-green-100 text-green-800 p-4 rounded-lg flex items-center justify-center font-semibold animate-up stagger-3"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>龐大市場機會</div>
+                    <div class="bg-green-100 text-green-800 p-4 rounded-lg flex items-center justify-center font-semibold animate-up stagger-4"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>成熟技術優勢</div>
+                    <div class="bg-green-100 text-green-800 p-4 rounded-lg flex items-center justify-center font-semibold animate-up stagger-5"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg>清晰高回報潛力</div>
+                </div>
+                <h3 class="text-3xl font-bold mt-8 animate-up stagger-5">Q & A</h3>
+                <div class="mt-4 text-gray-500 animate-up stagger-5">
+                    <p>聯絡人：陳崑元 營運長</p>
+                    <p>信箱：Rex@18light.cc | 電話：02-66057090 #88</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 導覽列 -->
+        <div class="bg-gray-50 p-4 flex justify-between items-center border-t border-gray-200">
+            <button id="prevBtn" class="px-6 py-2.5 text-base font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed nav-button shadow-md">
+                上一頁
+            </button>
+            <div id="slideCounter" class="text-sm font-medium text-gray-600"></div>
+            <button id="nextBtn" class="px-6 py-2.5 text-base font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed nav-button shadow-md">
+                下一頁
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- 元素選擇 ---
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slideCounter = document.getElementById('slideCounter');
+            const progressBar = document.getElementById('progressBar');
+            
+            // --- 狀態管理 ---
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            // --- Chart.js 圖表初始化 ---
+            const initializeCharts = () => {
+                // 設定 Chart.js 全域字體
+                Chart.defaults.font.family = "'Inter', 'Noto Sans TC', sans-serif";
+                Chart.defaults.font.size = 14;
+                Chart.defaults.color = '#374151';
+                Chart.register(ChartDataLabels);
+
+                // 市場機會圖表
+                const marketChartCtx = document.getElementById('marketChart');
+                if (marketChartCtx) {
+                    new Chart(marketChartCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['KOL 潮流市場', '企業團建市場', '室內娛樂市場'],
+                            datasets: [{
+                                label: '市場規模 (億日圓)',
+                                data: [435, 974, 3096],
+                                backgroundColor: ['rgba(239, 68, 68, 0.7)', 'rgba(59, 130, 246, 0.7)', 'rgba(34, 197, 94, 0.7)'],
+                                borderColor: ['#ef4444', '#3b82f6', '#22c55e'],
+                                borderWidth: 2,
+                                borderRadius: 5
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: { display: false },
+                                title: { display: true, text: '日本三大潛力市場規模 (億日圓)', font: { size: 16, weight: 'bold' } }
+                            },
+                            scales: { y: { beginAtZero: true } }
+                        }
+                    });
+                }
+
+                // 股權結構圖表
+                const shareholdingChartCtx = document.getElementById('shareholdingChart');
+                if(shareholdingChartCtx) {
+                    new Chart(shareholdingChartCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['投資人', 'CyberCube 台灣總部', '日本經營團隊'],
+                            datasets: [{
+                                label: '日本公司股權結構',
+                                data: [20, 65, 15],
+                                backgroundColor: ['#4f46e5', '#3b82f6', '#a78bfa'],
+                                borderColor: '#ffffff',
+                                borderWidth: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            cutout: '60%',
+                            plugins: {
+                                legend: { position: 'bottom', labels: { padding: 20, font: { size: 14 } } },
+                                title: { display: true, text: 'CyberCube 日本公司股權結構 (%)', font: { size: 18, weight: 'bold' } },
+                                datalabels: {
+                                    formatter: (value, ctx) => {
+                                        return value + '%';
+                                    },
+                                    color: '#fff',
+                                    font: {
+                                        weight: 'bold',
+                                        size: 16,
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                // 財務預測圖表 - 穩健
+                const steadyGrowthCtx = document.getElementById('steadyGrowthChart');
+                if (steadyGrowthCtx) {
+                    new Chart(steadyGrowthCtx, {
+                        type: 'line',
+                        data: {
+                            labels: Array.from({length: 24}, (_, i) => i + 1), // 24 months
+                            datasets: [
+                                {
+                                    label: '營收',
+                                    data: [0, 5, 10, 15, 20, 25, 35, 45, 55, 65, 75, 85, 100, 115, 130, 145, 160, 175, 190, 205, 220, 235, 250, 265],
+                                    borderColor: '#22c55e',
+                                    backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                                    fill: true,
+                                    tension: 0.4
+                                },
+                                {
+                                    label: '成本',
+                                    data: [10, 18, 26, 34, 42, 50, 60, 70, 80, 90, 100, 110, 125, 140, 155, 170, 185, 200, 215, 230, 245, 260, 275, 290],
+                                    borderColor: '#ef4444',
+                                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                    fill: true,
+                                    tension: 0.4
+                                }
+                            ]
+                        },
+                        options: { responsive: true, plugins: { legend: { display: true, position: 'top' } } }
+                    });
+                }
+
+                // 財務預測圖表 - 加速
+                const acceleratedGrowthCtx = document.getElementById('acceleratedGrowthChart');
+                if (acceleratedGrowthCtx) {
+                    new Chart(acceleratedGrowthCtx, {
+                        type: 'line',
+                        data: {
+                            labels: Array.from({length: 24}, (_, i) => i + 1), // 24 months
+                            datasets: [
+                                 {
+                                    label: '營收',
+                                    data: [0, 5, 10, 20, 35, 55, 80, 110, 145, 185, 230, 280, 335, 395, 460, 530, 605, 685, 770, 860, 955, 1055, 1160, 1270],
+                                    borderColor: '#22c55e',
+                                    backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                                    fill: true,
+                                    tension: 0.4
+                                },
+                                {
+                                    label: '成本',
+                                    data: [10, 18, 26, 40, 58, 80, 106, 136, 170, 208, 250, 296, 346, 400, 458, 520, 586, 656, 730, 808, 890, 976, 1066, 1160],
+                                    borderColor: '#ef4444',
+                                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                    fill: true,
+                                    tension: 0.4
+                                }
+                            ]
+                        },
+                        options: { responsive: true, plugins: { legend: { display: true, position: 'top' } } }
+                    });
+                }
+            };
+
+            // --- 核心功能函式 ---
+            const showSlide = (index) => {
+                if (slides[currentSlide]) {
+                    slides[currentSlide].classList.remove('active');
+                }
+                currentSlide = index;
+                if (slides[currentSlide]) {
+                    slides[currentSlide].classList.add('active');
+                }
+                updateControls();
+            };
+
+            const updateControls = () => {
+                slideCounter.textContent = `第 ${currentSlide + 1} / ${totalSlides} 頁`;
+                progressBar.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = currentSlide === totalSlides - 1;
+            };
+
+            // --- 事件監聽 ---
+            prevBtn.addEventListener('click', () => {
+                if (currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentSlide < totalSlides - 1) {
+                    showSlide(currentSlide + 1);
+                }
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    nextBtn.click();
+                } else if (e.key === 'ArrowLeft') {
+                    prevBtn.click();
+                }
+            });
+
+            // --- 初始化 ---
+            initializeCharts();
+            showSlide(currentSlide);
+        });
+    </script>
+</body>
+</html>
