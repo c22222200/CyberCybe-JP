@@ -110,7 +110,23 @@
 </head>
 <body class="bg-gray-900 flex flex-col items-center justify-center p-2 sm:p-4 md:p-8">
 
-    <div id="presentation" class="presentation-container w-full max-w-6xl bg-white rounded-2xl overflow-hidden flex flex-col h-[95vh] max-h-[900px]">
+    <!-- =========== 密碼保護層 =========== -->
+    <div id="password-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-95 z-50 flex items-center justify-center p-4 transition-opacity duration-500">
+        <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl p-8 text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">請輸入密碼</h2>
+            <p class="text-gray-500 mb-6">請輸入密碼以繼續瀏覽計畫書。</p>
+            <input type="password" id="password-input" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-center text-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+            <p id="error-message" class="text-red-500 h-6 mt-2 text-sm"></p>
+            <button id="password-submit" class="w-full mt-2 px-6 py-3 text-lg font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">
+                進入
+            </button>
+        </div>
+    </div>
+    <!-- ================================== -->
+
+
+    <!-- =========== 主要簡報內容 (預設隱藏) =========== -->
+    <div id="presentation" class="presentation-container w-full max-w-6xl bg-white rounded-2xl overflow-hidden flex flex-col h-[95vh] max-h-[900px]" style="display: none;">
         <!-- 進度條 -->
         <div class="w-full bg-gray-200 h-1.5 flex-shrink-0">
             <div id="progressBar" class="progress-bar bg-indigo-600 h-1.5" style="width: 0%;"></div>
@@ -547,6 +563,57 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            
+            // --- 密碼保護 ---
+            const CORRECT_PASSWORD = 'cybercube2025'; // ****** 在這裡設定您的密碼 ******
+            const passwordOverlay = document.getElementById('password-overlay');
+            const passwordInput = document.getElementById('password-input');
+            const passwordSubmit = document.getElementById('password-submit');
+            const errorMessage = document.getElementById('error-message');
+            const presentation = document.getElementById('presentation');
+
+            const checkPassword = () => {
+                if (passwordInput.value === CORRECT_PASSWORD) {
+                    // 密碼正確，淡出密碼層
+                    passwordOverlay.style.opacity = '0';
+                    setTimeout(() => {
+                        passwordOverlay.style.display = 'none';
+                    }, 500); // 等待淡出動畫結束
+
+                    // 顯示簡報內容
+                    presentation.style.display = 'flex';
+                    // 觸發一個小動畫讓內容出現更流暢
+                    presentation.style.animation = 'fadeIn 0.5s ease-in';
+
+                } else {
+                    // 密碼錯誤
+                    errorMessage.textContent = '密碼錯誤，請重試。';
+                    passwordInput.classList.add('border-red-500'); // 輸入框顯示錯誤狀態
+                    passwordInput.value = '';
+                    // 2秒後自動清除錯誤訊息
+                    setTimeout(() => {
+                       errorMessage.textContent = '';
+                       passwordInput.classList.remove('border-red-500');
+                    }, 2000);
+                }
+            };
+
+            // 監聽按鈕點擊
+            passwordSubmit.addEventListener('click', checkPassword);
+            
+            // 監聽 Enter 鍵
+            passwordInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+
+            // 頁面載入後自動聚焦到密碼輸入框
+            passwordInput.focus();
+
+
+            // --- 以下為原有的簡報控制程式碼 ---
+
             // --- 元素選擇 ---
             const slides = document.querySelectorAll('.slide');
             const prevBtn = document.getElementById('prevBtn');
@@ -657,6 +724,9 @@
             }
             
             document.addEventListener('keydown', (e) => {
+                // 確保只有在簡報顯示時才觸發鍵盤事件
+                if (presentation.style.display !== 'flex') return;
+
                 if (e.key === 'ArrowRight' || e.key === ' ') {
                     if(nextBtn) nextBtn.click();
                 } else if (e.key === 'ArrowLeft') {
@@ -671,6 +741,3 @@
     </script>
 </body>
 </html>
-
-
-手機版所有頁面的最上方都被蓋掉了，無法正常
