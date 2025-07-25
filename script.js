@@ -1,15 +1,32 @@
 document.addEventListener('DOMContentLoaded', function () {
     
-    // --- 密碼保護邏輯 ---
-    const CORRECT_PASSWORD = 'cybercube2025'; // ****** 在這裡設定您的密碼 ******
+    // --- 密碼保護邏輯 (升級版) ---
+    const CORRECT_PASSWORD_HASH = 'b2b2f104d32c638903e151a9b20d6e27b41d8c0c84cf8458738f83ca2f1dd744';
     const passwordOverlay = document.getElementById('password-overlay');
     const passwordInput = document.getElementById('password-input');
     const passwordSubmit = document.getElementById('password-submit');
     const errorMessage = document.getElementById('error-message');
     const presentationWrapper = document.getElementById('presentation-wrapper');
 
-    const checkPassword = () => {
-        if (passwordInput.value === CORRECT_PASSWORD) {
+    // 輔助函式：將字串轉換為 SHA-256 雜湊值
+    async function sha256(message) {
+        // 將字串編碼
+        const msgBuffer = new TextEncoder().encode(message);
+        // 雜湊處理
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        // 將 buffer 轉換為 16 進位字串
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        return hashHex;
+    }
+
+    const checkPassword = async () => {
+        const userInput = passwordInput.value;
+        if (!userInput) return; // 如果輸入為空則不處理
+
+        const userInputHash = await sha256(userInput);
+
+        if (userInputHash === CORRECT_PASSWORD_HASH) {
             // 密碼正確，淡出密碼層並載入內容
             passwordOverlay.style.opacity = '0';
             setTimeout(() => {
@@ -139,7 +156,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if(nextBtn) nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
         
         document.addEventListener('keydown', (e) => {
-            if (presentation.style.display !== 'flex' && !presentation.innerHTML) return; // 確保簡報已顯示
+            // 確保簡報已顯示
+            if (!presentationWrapper.querySelector('#presentation')) return;
             if (e.key === 'ArrowRight' || e.key === ' ') nextBtn.click();
             else if (e.key === 'ArrowLeft') prevBtn.click();
         });
