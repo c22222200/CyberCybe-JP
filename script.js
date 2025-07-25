@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     
     // --- 密碼保護邏輯 (升級版) ---
+    // 儲存密碼 '2025' 的 SHA-256 雜湊值。
     const CORRECT_PASSWORD_HASH = '3f64593292459383693994f3a7436c2941588b39478a846808a8ab9c60e05466';
     const passwordOverlay = document.getElementById('password-overlay');
     const passwordInput = document.getElementById('password-input');
