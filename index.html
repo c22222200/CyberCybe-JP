@@ -16,7 +16,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-900 flex flex-col items-center justify-center p-2 sm:p-4 md:p-8">
+<!-- 【修正】在 body 加入 flex, items-center, justify-center, min-h-screen 以確保內容垂直水平置中 -->
+<body class="bg-gray-900 flex flex-col items-center justify-center min-h-screen p-2 sm:p-4 md:p-8">
 
     <!-- =========== 密碼保護層 =========== -->
     <div id="password-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-95 z-50 flex items-center justify-center p-4 transition-opacity duration-500">
@@ -33,7 +34,7 @@
     <!-- ================================== -->
 
     <!-- =========== 簡報內容將會被載入到這裡 =========== -->
-    <div id="presentation-wrapper" class="w-full h-full">
+    <div id="presentation-wrapper" class="w-full h-full flex items-center justify-center">
         <!-- The presentation content will be loaded here by script.js -->
     </div>
     <!-- ============================================ -->
