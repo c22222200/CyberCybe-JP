@@ -1,0 +1,95 @@
+/* --- 核心樣式與設計系統 --- */
+html, body {
+    height: 100%;
+    overflow: hidden; /* 防止 body 本身捲動 */
+}
+body {
+    font-family: 'Inter', 'Noto Sans TC', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #111827; /* 深色背景，突顯主體 */
+}
+.presentation-container {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0,0,0,0.2);
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+.slides-container {
+    height: 100%;
+    overflow: hidden;
+}
+.slide {
+    display: none;
+    height: 100%; /* 讓 slide 填滿 slides-container */
+    padding: 2.5rem 1.5rem; /* 手機上的內距 */
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+    flex-direction: column;
+    justify-content: flex-start; /* 【修正】改為從頂部開始對齊 */
+    overflow-y: auto; /* 當內容過多時，啟用垂直捲動 */
+}
+@media (min-width: 768px) { /* md breakpoint */
+    .slide {
+        padding: 3rem 4.5rem; /* 桌面裝置的內距 */
+        justify-content: center; /* 【修正】桌面螢幕維持垂直置中 */
+    }
+}
+.slide.active {
+    display: flex;
+    opacity: 1;
+}
+h1, h2, h3 {
+    font-family: 'Noto Sans TC', 'Inter', sans-serif;
+    font-weight: 900;
+}
+/* --- 動畫效果 --- */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInLeft { from { opacity: 0; transform: translateX(-25px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+.slide.active { animation: fadeIn 0.5s ease-out; }
+.slide.active .animate-up { animation: fadeInUp 0.6s ease-out forwards; }
+.slide.active .animate-left { animation: fadeInLeft 0.6s ease-out forwards; }
+.slide.active .animate-zoom { animation: zoomIn 0.6s ease-out forwards; }
+
+/* 動畫延遲，製造層次感 */
+.stagger-1 { animation-delay: 0.1s; opacity: 0; }
+.stagger-2 { animation-delay: 0.2s; opacity: 0; }
+.stagger-3 { animation-delay: 0.3s; opacity: 0; }
+.stagger-4 { animation-delay: 0.4s; opacity: 0; }
+.stagger-5 { animation-delay: 0.5s; opacity: 0; }
+
+/* --- 組件樣式 --- */
+.nav-button {
+    transition: all 0.3s ease;
+}
+.nav-button:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 7px 15px rgba(99, 102, 241, 0.3);
+}
+.progress-bar {
+    transition: width 0.4s ease-out;
+}
+.brand-gradient-text {
+    background: linear-gradient(45deg, #4f46e5, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.icon-bg {
+    background-color: rgba(99, 102, 241, 0.1);
+    color: #6366f1;
+}
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -34px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    background-color: #6366f1;
+    border: 3px solid #e0e7ff;
+    border-radius: 9999px;
+    z-index: 10;
+}

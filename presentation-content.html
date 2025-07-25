@@ -1,0 +1,124 @@
+<!-- 這個檔案只包含簡報的 HTML 結構 -->
+<div id="presentation" class="presentation-container w-full max-w-6xl bg-white rounded-2xl overflow-hidden flex flex-col h-[95vh] max-h-[900px]">
+    <!-- 進度條 -->
+    <div class="w-full bg-gray-200 h-1.5 flex-shrink-0">
+        <div id="progressBar" class="progress-bar bg-indigo-600 h-1.5" style="width: 0%;"></div>
+    </div>
+
+    <div class="slides-container flex-grow">
+
+        <!-- Slide 1: 封面頁 (專家優化版) -->
+        <div class="slide active items-center text-center bg-gray-900 text-white" data-slide="1">
+            <div class="animate-up stagger-1">
+                <div class="w-24 h-1.5 bg-indigo-500 rounded-full mb-8 mx-auto"></div>
+            </div>
+            <h1 class="text-4xl md:text-7xl font-black animate-up stagger-2 tracking-wider">
+                <span class="brand-gradient-text">閃動格子</span><br>日本事業投資計畫書
+            </h1>
+            <p class="mt-6 text-lg md:text-2xl text-gray-300 font-medium animate-up stagger-3">FROM TAIWAN TO TOKYO: 開啟體感娛樂新紀元</p>
+            <div class="mt-12 md:mt-16 text-gray-400 animate-up stagger-4">
+                <p>提案方：CyberCube CO., Ltd. (閃動格子股份有限公司)</p>
+                <p>日期：2025年7月25日</p>
+                <p class="text-sm mt-2 italic">一份通往日本娛樂市場心臟的投資地圖</p>
+            </div>
+        </div>
+        
+        <!-- Slide 2: 議程 -->
+        <div class="slide" data-slide="2">
+            <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-10 md:mb-12 text-center animate-up stagger-1">簡報議程</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 md:gap-y-8 max-w-4xl mx-auto">
+                <div class="flex items-center animate-up stagger-2">
+                    <span class="icon-bg text-indigo-600 rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center font-bold">1</span>
+                    <span class="ml-4 text-lg md:text-xl text-gray-700">市場機會與品牌願景</span>
+                </div>
+                <div class="flex items-center animate-up stagger-3">
+                    <span class="icon-bg text-indigo-600 rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center font-bold">2</span>
+                    <span class="ml-4 text-lg md:text-xl text-gray-700">SWOT 與競品分析</span>
+                </div>
+                <div class="flex items-center animate-up stagger-4">
+                    <span class="icon-bg text-indigo-600 rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center font-bold">3</span>
+                    <span class="ml-4 text-lg md:text-xl text-gray-700">投資計畫與未來藍圖</span>
+                </div>
+                <div class="flex items-center animate-up stagger-5">
+                    <span class="icon-bg text-indigo-600 rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center font-bold">4</span>
+                    <span class="ml-4 text-lg md:text-xl text-gray-700">市場策略與風險評估</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: 投資摘要 (專家優化版) -->
+        <div class="slide" data-slide="3">
+            <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-8 md:mb-10 text-center animate-up stagger-1">投資摘要 (Executive Summary)</h2>
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div class="animate-up stagger-2 space-y-6 md:space-y-8">
+                    <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 md:p-6 rounded-r-lg">
+                        <h3 class="text-lg md:text-xl font-bold text-indigo-900 mb-2 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                            總投資金額
+                        </h3>
+                        <p class="text-4xl md:text-5xl font-extrabold text-indigo-600">約 新台幣 2,000 萬</p>
+                    </div>
+                    <div class="bg-gray-50 border-l-4 border-gray-500 p-4 md:p-6 rounded-r-lg">
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                            您將獲得
+                        </h3>
+                        <p class="text-3xl md:text-4xl font-bold text-gray-700">日本公司 <span class="text-indigo-600 font-extrabold">20%</span> 直接股權</p>
+                    </div>
+                </div>
+                <div class="animate-up stagger-3 bg-gray-50 p-6 md:p-8 rounded-xl shadow-inner">
+                    <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-4 text-center">資金分配結構</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg bg-green-100 border border-green-200">
+                            <p class="font-semibold text-green-800">A. 日本公司股本與營運資金</p>
+                            <p class="text-xl md:text-2xl font-bold text-green-700">1,400 萬日幣</p>
+                            <p class="text-sm text-green-600 mt-1">(約 新台幣 280 萬)</p>
+                        </div>
+                        <div class="p-4 rounded-lg bg-blue-100 border border-blue-200">
+                            <p class="font-semibold text-blue-800">B. 總部關鍵技術與服務授權</p>
+                            <p class="text-xl md:text-2xl font-bold text-blue-700">新台幣 1,720 萬</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ... 其它所有 slide 的 HTML 內容都放在這裡 ... -->
+        <!-- Slide 4 to 14 from your original file go here -->
+
+        <!-- Slide 14: 結論 -->
+        <div class="slide items-center text-center" data-slide="14">
+            <h2 class="text-3xl md:text-5xl font-bold text-gray-800 animate-up stagger-1">結論：<span class="brand-gradient-text">藍燈已亮，即刻啟程！</span></h2>
+            <p class="mt-6 text-base md:text-lg text-gray-600 max-w-3xl mx-auto animate-up stagger-2">CyberCube 在日本市場充滿機會。透過「台灣經驗 + 日本專業」的合作模式，我們能大幅降低風險，加速擴展，成為市場領導品牌。</p>
+            <div class="my-8 md:my-10 w-full max-w-3xl grid sm:grid-cols-3 gap-4 text-center">
+                <div class="bg-green-100 text-green-800 p-4 rounded-lg flex items-center justify-center font-semibold animate-up stagger-3 text-sm md:text-base"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>龐大市場機會</div>
+                <div class="bg-green-100 text-green-800 p-4 rounded-lg flex items-center justify-center font-semibold animate-up stagger-4 text-sm md:text-base"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>成熟技術優勢</div>
+                <div class="bg-green-100 text-green-800 p-4 rounded-lg flex items-center justify-center font-semibold animate-up stagger-5 text-sm md:text-base"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg>清晰高回報潛力</div>
+            </div>
+            <h3 class="text-3xl font-bold mt-8 animate-up stagger-5">Q & A</h3>
+            <div class="mt-4 text-gray-500 animate-up stagger-5 text-sm md:text-base">
+                <p>聯絡人：陳崑元 營運長</p>
+                <p>信箱：Rex@18light.cc | 電話：02-66057090 #88</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 導覽列 -->
+    <div class="bg-gray-50 p-4 flex flex-col sm:flex-row sm:justify-between items-center sm:items-end gap-4 sm:gap-0 border-t border-gray-200 flex-shrink-0">
+        <!-- 版權宣告 -->
+        <div class="order-last sm:order-first">
+            <p class="text-xs text-gray-400">Copyright © 閃動格子股份有限公司 All Rights Reserved.</p>
+        </div>
+        <!-- 控制按鈕 -->
+        <div class="flex items-center space-x-4">
+            <button id="prevBtn" class="px-6 py-2.5 text-base font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed nav-button shadow-md">
+                上一頁
+            </button>
+            <div id="slideCounter" class="text-sm font-medium text-gray-600"></div>
+            <button id="nextBtn" class="px-6 py-2.5 text-base font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed nav-button shadow-md">
+                下一頁
+            </button>
+        </div>
+    </div>
+</div>
