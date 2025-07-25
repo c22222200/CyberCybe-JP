@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     
     // --- 密碼保護邏輯 (升級版) ---
-    const CORRECT_PASSWORD_HASH = 'b2b2f104d32c638903e151a9b20d6e27b41d8c0c84cf8458738f83ca2f1dd744';
+    const CORRECT_PASSWORD_HASH = '3f64593292459383693994f3a7436c2941588b39478a846808a8ab9c60e05466';
     const passwordOverlay = document.getElementById('password-overlay');
     const passwordInput = document.getElementById('password-input');
     const passwordSubmit = document.getElementById('password-submit');
