@@ -149,6 +149,12 @@ document.addEventListener('DOMContentLoaded', function () {
         document.addEventListener('keydown', (e) => {
             // 確保簡報已顯示
             if (!presentationWrapper.querySelector('#presentation')) return;
+            // 將列印快捷鍵移到這裡，確保只有在簡報顯示時才觸發
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault(); 
+                window.print();
+                return; // 避免觸發下一頁
+            }
             if (e.key === 'ArrowRight' || e.key === ' ') nextBtn.click();
             else if (e.key === 'ArrowLeft') prevBtn.click();
         });
