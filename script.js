@@ -1,33 +1,23 @@
 document.addEventListener('DOMContentLoaded', function () {
     
-    // --- 密碼保護邏輯 (升級版) ---
-    // 儲存密碼 '2025' 的 SHA-256 雜湊值。
-    const CORRECT_PASSWORD_HASH = '3f64593292459383693994f3a7436c2941588b39478a846808a8ab9c60e05466';
+    // --- 密碼保護邏輯 (相容性修復版) ---
+    // 使用 Base64 編碼來隱藏密碼，以確保在本機檔案系統中也能正常運作。
+    // 這是 '2025' 的 Base64 編碼。
+    const CORRECT_PASSWORD_ENCODED = 'MjAyNQ==';
     const passwordOverlay = document.getElementById('password-overlay');
     const passwordInput = document.getElementById('password-input');
     const passwordSubmit = document.getElementById('password-submit');
     const errorMessage = document.getElementById('error-message');
     const presentationWrapper = document.getElementById('presentation-wrapper');
 
-    // 輔助函式：將字串轉換為 SHA-256 雜湊值
-    async function sha256(message) {
-        // 將字串編碼
-        const msgBuffer = new TextEncoder().encode(message);
-        // 雜湊處理
-        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-        // 將 buffer 轉換為 16 進位字串
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        return hashHex;
-    }
-
-    const checkPassword = async () => {
+    const checkPassword = () => {
         const userInput = passwordInput.value;
         if (!userInput) return; // 如果輸入為空則不處理
 
-        const userInputHash = await sha256(userInput);
+        // 使用 btoa() 將使用者輸入的內容進行 Base64 編碼
+        const userInputEncoded = btoa(userInput);
 
-        if (userInputHash === CORRECT_PASSWORD_HASH) {
+        if (userInputEncoded === CORRECT_PASSWORD_ENCODED) {
             // 密碼正確，淡出密碼層並載入內容
             passwordOverlay.style.opacity = '0';
             setTimeout(() => {
