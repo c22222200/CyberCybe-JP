@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     
     // --- 密碼保護邏輯 (相容性修復版) ---
-    // 使用 Base64 編碼來隱藏密碼，以確保在本機檔案系統中也能正常運作。
-    // 這是 '2025' 的 Base64 編碼。
+
     const CORRECT_PASSWORD_ENCODED = 'MjAyNQ==';
     const passwordOverlay = document.getElementById('password-overlay');
     const passwordInput = document.getElementById('password-input');
